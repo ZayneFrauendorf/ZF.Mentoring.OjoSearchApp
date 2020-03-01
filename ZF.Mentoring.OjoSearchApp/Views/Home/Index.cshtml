@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+        <div class="text-center">
+            <h1 class="display-4">Welcome</h1>
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            <input id="searchText" />
+            <button id="searchResults">Search</button>
+ 
+
+        </div>
+
+<script>
+    var searchResults = [];
+
+    window.onload = function () {
+        $('#searchResults').on('click',function () {
+
+        var searchText = $('#searchText').val();
+           
+            getLocalResults(searchText);
+        })
+    }
+
+    function getLocalResults(searchText = 'love') {
+        return $.ajax({
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            url: "Home/GetLocalResults?searchText=" + searchText,
+            success: function (result) {
+                //if (result.length > 0) {
+                //    searchResults = result
+                //    console.log(searchResults);
+                //} else {
+                    var searchText = $('#searchText').val();
+                    getResults(searchText);
+                //}
+               
+            },
+            error: function (jqXHR, textStatus, errorThrown) { alert("An error occurred while retrieving data " + errorThrown); },
+            complete: function () {
+                console.log('success')
+            }
+        });
+    }
+
+    function getResults(searchText = 'love', offset = 1, bibleVersionID = '06125adad2d5898a-01') {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+
+            xhr.addEventListener(`readystatechange`, function() {
+                if (this.readyState === this.DONE) {
+                    const { data, meta } = JSON.parse(this.responseText);
+                    console.log(data);
+                    resolve(data);
+                    updateLocalResults(data);
+                }
+            });
+
+            xhr.open(
+                `GET`,
+                `https://api.scripture.api.bible/v1/bibles/${bibleVersionID}/search?query=${searchText}&offset=${offset}`
+                );
+                xhr.setRequestHeader(`api-key`, "261befa40b9da7759d95e02616a2c3ad");
+
+                xhr.onerror = () => reject(xhr.statusText);
+
+                xhr.send();
+            });
+    }
+
+    function updateLocalResults(data) {
+
+        for (var item of data.verses) {
+            item.bookName = data.reference
+            if (item.reference[0].match(/[0-9]/g)) {
+                item.bookName = item.reference[0] + ' ' + item.reference.replace(/[^A-Za-z]/g, '').toString();
+            } else {
+                item.bookName = item.reference.replace(/[^A-Za-z]/g, '').toString();
+            }
+
+            item.chapterName = item.chapterId.replace(/[^0-9]/g, '').toString();
+
+            item.verseName = item.reference.split(':')[1];
+        }
+        // BookName = James
+        // ChapterName = 15
+        // VerseName = 9
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: "json",
+            url: "Home/UpdateLocalResults",
+            success: function (result) {
+                
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Woops, something went wrong.")
+            },
+            complete: function () {
+                console.log('success');
+            }
+        })
+    }
+</script>

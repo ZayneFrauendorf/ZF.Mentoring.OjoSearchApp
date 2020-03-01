@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZF.Mentoring.OjoSearchApp", "ZF.Mentoring.OjoSearchApp\ZF.Mentoring.OjoSearchApp.csproj", "{04D20F9F-7E90-4A9A-A2A0-17E45A108676}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AC2E9AB7-EA75-4DD8-A974-8925820E0295}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04D20F9F-7E90-4A9A-A2A0-17E45A108676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D20F9F-7E90-4A9A-A2A0-17E45A108676}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D20F9F-7E90-4A9A-A2A0-17E45A108676}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D20F9F-7E90-4A9A-A2A0-17E45A108676}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {90A7047B-2AFF-4C01-82FC-52BC752B517E}
+	EndGlobalSection
+EndGlobal
